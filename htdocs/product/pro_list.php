@@ -13,15 +13,15 @@
       $dbh= new PDO($dsn, $user, $password);
       $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-      $sql = 'SELECT id,name FROM mst_staff where 1';
+      $sql = 'SELECT id,name,price FROM mst_product where 1';
       $stmt = $dbh->prepare($sql);
       $stmt->execute();
 
       $dbh = null;
 
-      print 'スタッフ一覧<br>';
+      print '商品一覧<br>';
 
-      print '<form method="post" action="staff_branch.php">';
+      print '<form method="post" action="pro_branch.php">';
       while(true)
       {
         $rec = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,7 +30,8 @@
           break;
         }
         print '<input type="radio" name="id" value=" '.$rec['id'].' ">';
-        print $rec['name'];
+        print $rec['name'].'---';
+        print $rec['price'].'円';
         print '<br>';
       }
       print '<input type="submit" name="disp" value="参照">';

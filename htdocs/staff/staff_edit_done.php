@@ -7,6 +7,7 @@
   <body>
     <?php
     try {
+        $staff_id = $_POST['id'];
         $staff_name = $_POST['name'];
         $staff_pass = $_POST['pass'];
 
@@ -19,22 +20,22 @@
         $dbh= new PDO($dsn, $user, $password);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql ='INSERT INTO mst_staff(name, password) VALUES (?,?)';
+        $sql ='UPDATE mst_staff SET name=?, password=? WHERE id=?';
         $stmt = $dbh->prepare($sql);
         $data[] = $staff_name;
         $data[] = $staff_pass;
+        $data[] = $staff_id;
         $stmt->execute($data);
 
         $dbh = null;
 
-        print $staff_name;
-        print 'さんを追加しました。<br>';
     } catch (Exception $e) {
         print 'ただいま障害により大変ご迷惑をおかけしています。';
         exit();
     }
     ?>
-
+    修正しました。<br>
+    <br>
     <a href="staff_list.php">戻る</a>
   </body>
 </html>
