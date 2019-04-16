@@ -1,17 +1,19 @@
 <?php
 session_start();
 session_regenerate_id(true);
-if(isset($_SESSION['login']) == false)
- {
-   print 'ログインされていません<br>';
-   print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
-   exit();
- }else{
-   print $_SESSION['staff_name'];
-   print 'さんログイン中';
-   print '<br>';
- }
- ?>
+if(isset($_SESSION['member_login']) == false)
+{
+  print 'ようこそゲスト様';
+  print '<a href="member_login.html">会員ログイン</a><br>';
+  print '<br>';
+}else{
+  print 'ようこそ';
+  print $_SESSION['member_name'];
+  print '様';
+  print '<a href="member_logout.php">ログアウト</a><br>';
+  print '<br>';
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,7 +23,7 @@ if(isset($_SESSION['login']) == false)
   <body>
     <?php
       try {
-          $pro_id = $_GET['id'];
+          $pro_id = $_GET['procode'];
 
           $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
           $user = 'root';
@@ -45,8 +47,9 @@ if(isset($_SESSION['login']) == false)
           {
             $disp_gazou = "";
           }else{
-            $disp_gazou = '<img src="./gazou'.$pro_gazou_name.'">';
+            $disp_gazou = '<img src="../product/gazou'.$pro_gazou_name.'">';
           }
+          print'<a href="shop_cartin.php?procode='.$pro_id.'">カートに入れる</a><br><br>';
 
       } catch (EXCEPTION $e) {
           print 'ただいま障害により大変ご迷惑をおかけしています。';

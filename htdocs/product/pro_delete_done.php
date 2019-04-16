@@ -1,3 +1,17 @@
+<?php
+session_start();
+session_regenerate_id(true);
+if(isset($_SESSION['login']) == false)
+ {
+   print 'ログインされていません<br>';
+   print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
+   exit();
+ }else{
+   print $_SESSION['staff_name'];
+   print 'さんログイン中';
+   print '<br>';
+ }
+ ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,6 +22,7 @@
     <?php
     try {
         $pro_id = $_POST['id'];
+        $pro_gazou_name = $_POST['gazou_name'];
 
 
         $dsn ='mysql:dbname=shop;host=localhost;charset=utf8';
@@ -22,6 +37,11 @@
         $stmt->execute($data);
 
         $dbh = null;
+
+        if($pro_gazou_name != "")
+        {
+          unlink('./gazou'.$pro_gazou_name);
+        }
 
     } catch (Exception $e) {
         print 'ただいま障害により大変ご迷惑をおかけしています。';

@@ -1,17 +1,19 @@
 <?php
 session_start();
 session_regenerate_id(true);
-if(isset($_SESSION['login']) == false)
- {
-   print 'ログインされていません<br>';
-   print '<a href="../staff_login/staff_login.html">ログイン画面へ</a>';
-   exit();
- }else{
-   print $_SESSION['staff_name'];
-   print 'さんログイン中';
-   print '<br>';
- }
- ?>
+if(isset($_SESSION['member_login']) == false)
+{
+  print 'ようこそゲスト様';
+  print '<a href="member_login.html">会員ログイン</a><br>';
+  print '<br>';
+}else{
+  print 'ようこそ';
+  print $_SESSION['member_name'];
+  print '様';
+  print '<a href="member_logout.php">ログアウト</a><br>';
+  print '<br>';
+}
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -43,16 +45,14 @@ if(isset($_SESSION['login']) == false)
         {
           break;
         }
-        print '<input type="radio" name="id" value=" '.$rec['id'].' ">';
+        print '<a href="shop_product.php?procode='.$rec['id'].'">';
         print $rec['name'].'---';
         print $rec['price'].'円';
         print '<br>';
+
       }
-      print '<input type="submit" name="disp" value="参照">';
-      print '<input type="submit" name="add" value="追加">';
-      print '<input type="submit" name="edit" value="修正">';
-      print '<input type="submit" name="delete" value="削除">';
-      print '</form>';
+      print '<br>';
+      print '<a href="shop_cartlook.php">カートをみる</a><br>';
 
     }
     catch(EXCEPTION $e)
